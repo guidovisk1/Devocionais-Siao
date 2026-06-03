@@ -20,15 +20,15 @@ export default function Home() {
       if (search) params.search = search
       if (categoryId) params.category_id = categoryId
       const res = await api.get('/devocionais', { params })
-      setDevotionals(res.data.items)
-      setPagination({ pages: res.data.pages, total: res.data.total })
+      setDevotionals(Array.isArray(res.data?.items) ? res.data.items : [])
+      setPagination({ pages: res.data?.pages ?? 1, total: res.data?.total ?? 0 })
     } finally {
       setLoading(false)
     }
   }, [page, search, categoryId])
 
   useEffect(() => {
-    api.get('/categorias').then((res) => setCategories(res.data))
+    api.get('/categorias').then((res) => setCategories(Array.isArray(res.data) ? res.data : [])).catch(() => {})
   }, [])
 
   useEffect(() => {
