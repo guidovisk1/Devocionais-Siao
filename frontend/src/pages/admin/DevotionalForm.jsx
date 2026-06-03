@@ -25,7 +25,7 @@ export default function DevotionalForm() {
     api.get('/categorias').then((res) => setCategories(res.data))
     if (isEditing) {
       setLoading(true)
-      api.get(`/devocionais/${id}`)
+      api.get(`/devocionais/admin/${id}`)
         .then((res) => {
           const d = res.data
           setForm({
